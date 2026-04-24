@@ -56,23 +56,18 @@ function askOpenPdf(exp) {
 
 function showVideoPlayer(exp, video, backToChooser) {
   if (video.external) {
-    const embedUrl = "https://player.bilibili.com/player.html?bvid=BV1fgoVBGEWH&page=1";
     const close = showModal(`
       <h2>${video.title}</h2>
-      <div class="video-area" style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:16px;">
-        <iframe
-          src="${embedUrl}"
-          title="${video.title}"
-          style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:16px;background:#000;"
-          allowfullscreen="true">
-        </iframe>
-      </div>
       <div class="btn-row">
+        <button class="action-btn" id="openExternalVideo">打开视频</button>
         <button class="action-btn" id="backChoose">返回</button>
         <button class="action-btn secondary" id="goPdfDirect">实验指导</button>
       </div>
     `);
 
+    document.getElementById("openExternalVideo").onclick = () => {
+      window.open(video.file, "_blank");
+    };
     document.getElementById("backChoose").onclick = () => {
       close();
       backToChooser();
