@@ -1,3 +1,38 @@
+const SITE_EXPIRE_AT = new Date("2026-07-01T23:59:59+08:00");
+
+function showExpiredPage() {
+  document.body.innerHTML = `
+    <div style="
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      font-family:'Microsoft YaHei','PingFang SC',Arial,sans-serif;
+      background:linear-gradient(180deg,#eef5fb,#dfeaf6);
+    ">
+      <div style="
+        width:min(680px,96vw);
+        background:#ffffff;
+        border:1px solid #d9e4ef;
+        border-radius:24px;
+        box-shadow:0 14px 40px rgba(25,59,102,.12);
+        padding:36px 28px;
+        text-align:center;
+        color:#143a67;
+      ">
+        <h1 style="margin:0 0 14px;font-size:32px;">工程测量实验指导</h1>
+        <p style="margin:0;font-size:18px;line-height:1.9;">本站使用期限已到，当前不可继续访问。</p>
+      </div>
+    </div>
+  `;
+}
+
+if (new Date() > SITE_EXPIRE_AT) {
+  showExpiredPage();
+  throw new Error("Site expired");
+}
+
 function openFile(path) {
   const normalizedPath = encodeURI(path);
   const isPdf = /\.pdf$/i.test(path);
