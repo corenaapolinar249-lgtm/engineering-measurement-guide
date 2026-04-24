@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文档查看</title>
+  <style>
+    :root{
+      --bg:#eef5fb; --card:#ffffff; --text:#143a67; --muted:#5c7696; --line:#dbe6f1;
+      --primary:#2f78bb; --secondary:#8ea4bc; --shadow:0 14px 40px rgba(25,59,102,.12);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;
+      background:linear-gradient(180deg,#eef5fb,#dfeaf6);
+      color:var(--text)
+    }
+    .shell{
+      max-width:1200px;
+      margin:0 auto;
+      padding:18px 16px 36px
+    }
+    .topbar{
+      position:sticky;
+      top:10px;
+      z-index:20;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:14px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+      backdrop-filter:blur(10px);
+    }
+    .title h1{
+      margin:0;
+      font-size:26px;
+      line-height:1.3;
+    }
+    .title .meta{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap
+    }
+    .btn{
+      appearance:none;
+      border:none;
+      border-radius:12px;
+      min-height:42px;
+      padding:10px 16px;
+      background:linear-gradient(180deg,var(--primary),#2b70b1);
+      color:#fff;
+      font-size:14px;
+      font-weight:700;
+      cursor:pointer
+    }
+    .btn.secondary{
+      background:linear-gradient(180deg,#9fb4c9,#8da3bb)
+    }
+    .page-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-bottom:18px
+    }
+    .page-label{
+      font-size:14px;
+      font-weight:700;
+      color:#5e7b9d;
+      margin-bottom:12px
+    }
+    .page-img{
+      display:block;
+      width:100%;
+      height:auto;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff
+    }
+    .page-nav{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:30;
+    }
+    .page-nav button{
+      width:54px;
+      height:54px;
+      border:none;
+      border-radius:50%;
+      background:linear-gradient(180deg,var(--primary),#2b70b1);
+      color:#fff;
+      font-size:18px;
+      font-weight:700;
+      box-shadow:var(--shadow);
+      cursor:pointer;
+    }
+    .empty{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:28px;
+      color:var(--muted)
+    }
+    @media (max-width:700px){
+      .topbar{flex-direction:column;align-items:flex-start;top:8px}
+      .title h1{font-size:22px}
+      .page-nav{right:12px;bottom:12px}
+      .page-nav button{width:48px;height:48px}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="title">
+        <h1 id="docTitle">文档查看</h1>
+        <div class="meta">
+          <span id="pageCountText"></span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" onclick="window.location.href='index.html'">返回主页</button>
+      </div>
+    </div>
+
+    <div id="pagesWrap"></div>
+  </div>
+
+  <div class="page-nav">
+    <button id="toTopBtn" title="返回顶部">↑</button>
+    <button id="toBottomBtn" title="到底部">↓</button>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get("file");
+    const pagesWrap = document.getElementById("pagesWrap");
+
+    function decodeFileName(path) {
+      if (!path) return "文档查看";
+      const parts = path.split("/");
+      return decodeURIComponent(parts[parts.length - 1]).replace(/\.pdf$/i, "");
+    }
+
+    document.getElementById("docTitle").textContent = decodeFileName(file);
+
+    if (!file || !imagePdfMap[file]) {
+      pagesWrap.innerHTML = '<div class="empty">未找到内容。</div>';
+      document.getElementById("pageCountText").textContent = "";
+    } else {
+      const doc = imagePdfMap[file];
+      document.getElementById("pageCountText").textContent = `共 ${doc.pages.length} 页`;
+      pagesWrap.innerHTML = doc.pages.map((src, idx) => `
+        <div class="page-card" id="page-${idx + 1}">
+          <div class="page-label">第 ${idx + 1} 页</div>
+          <img class="page-img" src="${encodeURI(src)}" alt="${doc.title} 第 ${idx + 1} 页" />
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("toTopBtn").onclick = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    document.getElementById("toBottomBtn").onclick = () => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    };
+  </script>
+</body>
+</html>

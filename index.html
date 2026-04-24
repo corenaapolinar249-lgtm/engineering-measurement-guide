@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>工程测量实验指导网站</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__badge">工程测量实验教学</div>
+      <h1>工程测量实验指导网站</h1>
+    </header>
+
+    <main class="content-card">
+      <section class="table-wrap">
+        <div class="table-head row-grid">
+          <div class="col-label">编号</div>
+          <div class="col-main">实验指导填写（供查看）</div>
+          <div class="col-side">实验指导 / 视频</div>
+        </div>
+
+        <div class="table-body">
+          <div class="resource-row row-grid resource-row--appendix">
+            <div class="cell label">附录</div>
+            <button class="btn btn--main" id="topMapBtn">控制点位图</button>
+            <div class="cell placeholder">——</div>
+          </div>
+
+          <div id="expRows"></div>
+
+          <div class="resource-row row-grid resource-row--appendix">
+            <div class="cell label">附件</div>
+            <div class="cell placeholder">——</div>
+            <button class="btn btn--side" id="bottomKnownBtn">呈贡校区已知控制点</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal-card" id="modal"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
