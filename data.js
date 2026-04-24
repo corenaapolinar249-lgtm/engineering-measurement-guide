@@ -31,7 +31,8 @@ const experiments = [
     "videos": [
       {
         "title": "经纬仪的认识与使用",
-        "file": "实验指导视频/经纬仪的认识与使用.mp4"
+        "file": "https://www.bilibili.com/video/BV1fgoVBGEWH/",
+        "external": true
       }
     ]
   },
