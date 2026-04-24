@@ -63,6 +63,15 @@ body{
   position:relative;
   z-index:1;
 }
+.hero-note{
+  margin:12px 0 0;
+  max-width:860px;
+  font-size:15px;
+  line-height:1.8;
+  color:rgba(255,255,255,.92);
+  position:relative;
+  z-index:1;
+}
 .hero-author{
   margin:10px 0 0;
   font-size:16px;
@@ -221,6 +230,7 @@ body{
   .page-shell{padding:18px 10px 26px}
   .hero{padding:22px 18px;border-radius:20px}
   .hero h1{font-size:26px}
+  .hero-note{font-size:13px}
   .hero-author{font-size:14px}
   .row-grid,.table-head{grid-template-columns:68px 1fr}
   .col-side{display:none}
