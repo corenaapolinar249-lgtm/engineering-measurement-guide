@@ -1,4 +1,4 @@
-const SITE_EXPIRE_AT = new Date("2026-07-01T23:59:59+08:00");
+const SITE_EXPIRE_AT = new Date("2027-02-01T23:59:59+08:00");
 
 function showExpiredPage() {
   document.body.innerHTML = `
